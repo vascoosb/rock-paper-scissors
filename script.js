@@ -7,35 +7,66 @@ function getComputerChoice() {
 
 function playRound (playerSelection, computerSelection) {
     const normalizedPlayerSelection = playerSelection.toLowerCase();
+    let result;
     if (normalizedPlayerSelection == computerSelection) {
-        return "Draw! Play again."
+        result = "Draw! Play again.";
     }
     else if (normalizedPlayerSelection == 'rock') {
         if (computerSelection == 'paper') {
-            return 'You Lose! Paper beats Rock.'
+            result = 'You Lose! Paper beats Rock.';
         }
         else {
-            return 'You Win! Rock beats Scissors.'
+            result = 'You Win! Rock beats Scissors.';
         }
     }
     else if (normalizedPlayerSelection == 'paper') {
         if (computerSelection == 'rock') {
-            return 'You Win! Paper beats Rock.'
+            result = 'You Win! Paper beats Rock.';
         }
         else {
-            return 'You Lose! Scissors beat Paper.'
+            result = 'You Lose! Scissors beat Paper.';
         }
     }
     else {
         if (computerSelection == 'paper') {
-            return 'You Win! Scissors beat Paper.'
+            result = 'You Win! Scissors beat Paper.'
         }
         else {
-            return 'You Lose! Rock beats Paper.'
+            result = 'You Lose! Rock beats Paper.';
         }
     }
+    return result;
 }
 
-playerSelection = 'rock';
-computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    for (let i=0; i<5; i++) {
+        const playerSelection = prompt("Enter your selection (rock/paper/scissors)");
+        const computerSelection = getComputerChoice();
+        const roundResult = playRound(playerSelection, computerSelection);
+        if (roundResult.includes("You Win")) {
+            playerScore += 1;
+            console.log(roundResult + " Score is " + playerScore + " to " + computerScore)
+        }
+        else if (roundResult.includes("You Lose")) {
+            computerScore += 1;
+            console.log(roundResult + " Score is " + playerScore + " to " + computerScore)
+        }
+        else {
+            console.log(roundResult + " Score is " + playerScore + " to " + computerScore)
+        }
+    }
+    if (playerScore > computerScore) {
+        return "Congratulations, you win with a result of " + playerScore + " to " + computerScore + "!"
+    }
+    else if (playerScore < computerScore) {
+        return "Unlucky, computer wins with a result of " + playerScore + " to " + computerScore + "!"
+    }
+    else {
+        return "It's a draw. The result is " + playerScore + " to " + computerScore + "!"
+    }
+
+}
+
+console.log(game());
