@@ -6,12 +6,11 @@ function getComputerChoice() {
 }
 
 function playRound (playerSelection, computerSelection) {
-    const normalizedPlayerSelection = playerSelection.toLowerCase();
     let result;
-    if (normalizedPlayerSelection == computerSelection) {
+    if (playerSelection == computerSelection) {
         result = "Draw! Play again.";
     }
-    else if (normalizedPlayerSelection == 'rock') {
+    else if (playerSelection == 'rock') {
         if (computerSelection == 'paper') {
             result = 'You Lose! Paper beats Rock.';
         }
@@ -19,7 +18,7 @@ function playRound (playerSelection, computerSelection) {
             result = 'You Win! Rock beats Scissors.';
         }
     }
-    else if (normalizedPlayerSelection == 'paper') {
+    else if (playerSelection == 'paper') {
         if (computerSelection == 'rock') {
             result = 'You Win! Paper beats Rock.';
         }
@@ -32,43 +31,55 @@ function playRound (playerSelection, computerSelection) {
             result = 'You Win! Scissors beat Paper.'
         }
         else {
-            result = 'You Lose! Rock beats Paper.';
+            result = 'You Lose! Rock beats Scissors.';
         }
     }
-    return result;
-}
-
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i=0; i<5; i++) {
-        do {
-            playerSelection = prompt("Enter your selection (rock, paper or scissors)").toLowerCase();
-        } while (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors");
-        const computerSelection = getComputerChoice();
-        const roundResult = playRound(playerSelection, computerSelection);
-        if (roundResult.includes("You Win")) {
-            playerScore += 1;
-            console.log(roundResult + " Score is " + playerScore + " to " + computerScore)
-        }
-        else if (roundResult.includes("You Lose")) {
-            computerScore += 1;
-            console.log(roundResult + " Score is " + playerScore + " to " + computerScore)
-        }
-        else {
-            console.log(roundResult + " Score is " + playerScore + " to " + computerScore)
-        }
+    
+    if (playerScore === 5) {
+        const scoreDisplay = document.getElementById("scoreDisplay");
+        scoreDisplay.textContent = `Player wins game with a score of ${playerScore} to ${computerScore}!`
+        playerScore = 0;
+        computerScore = 0;
     }
-    if (playerScore > computerScore) {
-        return "Congratulations, you win with a result of " + playerScore + " to " + computerScore + "!"
-    }
-    else if (playerScore < computerScore) {
-        return "Unlucky, computer wins with a result of " + playerScore + " to " + computerScore + "!"
+    else if (computerScore === 5) {
+        const scoreDisplay = document.getElementById("scoreDisplay");
+        scoreDisplay.textContent = `Computer wins game with a score of ${computerScore} to ${playerScore}!`
+        playerScore = 0;
+        computerScore = 0;
     }
     else {
-        return "It's a draw. The result is " + playerScore + " to " + computerScore + "!"
+        const resultDisplay = document.getElementById("resultDisplay");
+        resultDisplay.textContent = result;
+        if (result.includes("You Win")) {
+            playerScore += 1;
+        }
+        else if(result.includes("You Lose")) {
+            computerScore +=1;
+        }
+        else {
+            playerScore += 1;
+            computerScore += 1;
+        }
     }
-
 }
 
-console.log(game());
+let playerScore = 0;
+let computerScore = 0;
+let playerSelection;
+const rockButton = document.getElementById("rock");
+const paperButton = document.getElementById("paper");
+const scissorsButton = document.getElementById("scissors");
+
+rockButton.addEventListener("click", () => {
+    playerSelection = "rock";
+    playRound(playerSelection, getComputerChoice());
+
+});
+paperButton.addEventListener("click", () => {
+    playerSelection = "paper";
+    playRound(playerSelection, getComputerChoice());
+});
+scissorsButton.addEventListener("click", () => {
+    playerSelection = "scissors";
+    playRound(playerSelection, getComputerChoice());
+});
