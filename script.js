@@ -43,7 +43,7 @@ function game() {
     let computerScore = 0;
     for (let i=0; i<5; i++) {
         do {
-            playerSelection = prompt("Enter your selection (rock/paper/scissors)").toLowerCase();
+            playerSelection = prompt("Enter your selection (rock, paper or scissors)").toLowerCase();
         } while (playerSelection !== "rock" && playerSelection !== "paper" && playerSelection !== "scissors");
         const computerSelection = getComputerChoice();
         const roundResult = playRound(playerSelection, computerSelection);
