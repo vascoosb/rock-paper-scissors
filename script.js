@@ -7,6 +7,8 @@ function getComputerChoice() {
 
 function playRound (playerSelection, computerSelection) {
     let result;
+    let scoreDisplay = document.getElementById("scoreDisplay");
+    scoreDisplay.textContent = ""
     if (playerSelection == computerSelection) {
         result = "Draw! Play again.";
     }
@@ -36,13 +38,11 @@ function playRound (playerSelection, computerSelection) {
     }
     
     if (playerScore === 5) {
-        const scoreDisplay = document.getElementById("scoreDisplay");
         scoreDisplay.textContent = `Player wins game with a score of ${playerScore} to ${computerScore}!`
         playerScore = 0;
         computerScore = 0;
     }
     else if (computerScore === 5) {
-        const scoreDisplay = document.getElementById("scoreDisplay");
         scoreDisplay.textContent = `Computer wins game with a score of ${computerScore} to ${playerScore}!`
         playerScore = 0;
         computerScore = 0;
@@ -73,7 +73,6 @@ const scissorsButton = document.getElementById("scissors");
 rockButton.addEventListener("click", () => {
     playerSelection = "rock";
     playRound(playerSelection, getComputerChoice());
-
 });
 paperButton.addEventListener("click", () => {
     playerSelection = "paper";
